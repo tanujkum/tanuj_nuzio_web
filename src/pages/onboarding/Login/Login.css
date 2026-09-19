@@ -1,0 +1,181 @@
+.login {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 24px 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 38% at 50% 8%, rgba(124, 92, 255, 0.32) 0%, transparent 70%),
+    var(--bg);
+}
+
+/* ---------- Logo (center) ---------- */
+.login__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.login__mark {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #a58bff, #6a49f0);
+  box-shadow: 0 0 20px rgba(124, 92, 255, 0.75);
+}
+.login__mark::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: #fff;
+}
+.login__name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.login__badge {
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: #b7a8ff;
+  background: var(--primary-soft);
+  border: 1px solid rgba(124, 92, 255, 0.35);
+}
+
+/* ---------- Hero ---------- */
+.login__hero {
+  flex: 1;
+  margin-top: 15vh;
+}
+.login__title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+.login__title em {
+  display: block;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 40px;
+  letter-spacing: 0;
+  color: var(--primary);
+}
+.login__sub {
+  margin-top: 14px;
+  max-width: 270px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* ---------- Bottom ---------- */
+.login__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 24px;
+}
+.login__error { text-align: center; margin: 0; }
+
+/* Custom Google button (face) + asli Google button (invisible overlay) */
+.gbtn {
+  position: relative;
+  height: 52px;
+  cursor: pointer;
+}
+.gbtn__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  pointer-events: none;
+  transition: border-color 0.15s;
+}
+.gbtn:hover .gbtn__face { border-color: var(--primary); }
+
+.gbtn__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 0;
+}
+/* Google ka button 40px ka hota hai, 52px tak stretch karo */
+.gbtn__overlay > div { transform: scaleY(1.3); }
+
+.login__terms {
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.login__terms span { color: #b7a8ff; text-decoration: underline; cursor: pointer; }
+
+/* ---------- Dev login (sirf development) ---------- */
+/* .login__dev { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.login__devtoggle {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.6;
+} */
+
+.login__or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+}
+.login__or::before,
+.login__or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.login__form { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+.login__input {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+}
+.login__input:focus { border-color: var(--primary); }
+.login__form { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+.login__input {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+}
+.login__input:focus { border-color: var(--primary); }

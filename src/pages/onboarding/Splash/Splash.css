@@ -1,0 +1,14 @@
+.splash {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 35%, #1d1650 0%, var(--bg) 60%);
+}
+.splash__logo { font-size: 42px; color: var(--primary); margin-bottom: 10px; }
+.splash__brand { font-size: 30px; }
+.splash__brand span { color: var(--primary); font-style: italic; }
+.splash__tag { margin-top: 18px; font-family: var(--font-heading); font-size: 22px; }
+.splash__tag em { color: var(--primary); }
+.splash__foot {
+  position: absolute; bottom: 36px;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted);
+}

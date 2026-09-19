@@ -1,0 +1,126 @@
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { GoogleLogin } from '@react-oauth/google';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { devLogin, googleLogin } from '../../../features/auth/authThunks';
+import { loginSchema } from '../../../validation/auth.schema';
+import Button from '../../../components/ui/Button/Button';
+import './Login.css';
+
+const GOOGLE_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+const GoogleIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+  </svg>
+);
+
+export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { token, user } = useSelector((s) => s.auth);
+  const [serverError, setServerError] = useState('');
+
+  const wrapRef = useRef(null);
+  const [gWidth, setGWidth] = useState(340);
+
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
+
+  useEffect(() => {
+    if (wrapRef.current) setGWidth(Math.min(400, Math.floor(wrapRef.current.offsetWidth)));
+  }, []);
+
+  useEffect(() => {
+    if (token) navigate(user?.onboardingCompleted ? '/home' : '/onboarding/profession', { replace: true });
+  }, [token, user, navigate]);
+
+  const onGoogleSuccess = async (res) => {
+    setServerError('');
+    try {
+      await dispatch(googleLogin({ idToken: res.credential })).unwrap();
+    } catch (msg) {
+      setServerError(typeof msg === 'string' ? msg : 'Google login failed');
+    }
+  };
+
+  const onSubmit = async (values) => {
+    setServerError('');
+    try {
+      await dispatch(devLogin(values)).unwrap();
+    } catch (msg) {
+      setServerError(typeof msg === 'string' ? msg : 'Login failed');
+    }
+  };
+
+  return (
+    <div className="login">
+      <header className="login__logo">
+        <span className="login__mark" />
+        <span className="login__name">Nuzio</span>
+        <span className="login__badge">AI</span>
+      </header>
+
+      <section className="login__hero">
+        <h1 className="login__title">
+          Good morning.
+          <em>News on go.</em>
+        </h1>
+        <p className="login__sub">
+          Personalised audio news for Indian professionals — curated every morning.
+        </p>
+      </section>
+
+      <footer className="login__bottom">
+        {/* ---- Google ---- */}
+        <div
+          ref={wrapRef}
+          className="gbtn"
+          onClick={!GOOGLE_ID ? () => setServerError('Google login off hai: .env mein VITE_GOOGLE_CLIENT_ID daalo') : undefined}
+        >
+          <div className="gbtn__face">
+            <GoogleIcon />
+            <span>Continue with Google</span>
+          </div>
+
+          {GOOGLE_ID && (
+            <div className="gbtn__overlay">
+              <GoogleLogin
+                onSuccess={onGoogleSuccess}
+                onError={() => setServerError('Google sign-in failed. Please try again.')}
+                theme="filled_black"
+                shape="rectangular"
+                width={String(gWidth)}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* ---- OR + Name/Email login ---- */}
+        <div className="login__or"><span>OR</span></div>
+
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="login__form">
+          <input className="login__input" placeholder="Your name" {...register('name')} />
+          {errors.name && <p className="form-error">{errors.name.message}</p>}
+
+          <input className="login__input" placeholder="Email" type="email" {...register('email')} />
+          {errors.email && <p className="form-error">{errors.email.message}</p>}
+
+          {serverError && <p className="form-error">{serverError}</p>}
+
+          <Button type="submit" loading={isSubmitting}>Continue →</Button>
+        </form>
+
+        <p className="login__terms">
+          By continuing you agree to our <span>Terms</span> · <span>Privacy Policy</span>
+        </p>
+      </footer>
+    </div>
+  );
+}

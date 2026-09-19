@@ -1,0 +1,17 @@
+.ampm { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ampm__btn {
+  padding: 12px 0; font-size: 14px; font-weight: 500;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+.ampm__btn--active { background: var(--primary-soft); border-color: var(--primary); color: var(--text); }
+
+.wheel { display: flex; flex-direction: column; align-items: center; margin-top: 26px; gap: 4px; }
+.wheel__arrow { color: var(--text-muted); font-size: 12px; padding: 8px 30px; }
+.wheel__item { font-size: 22px; padding: 10px 40px; color: var(--text-muted); border-radius: var(--radius-md); }
+.wheel__item--far { opacity: 0.4; font-size: 18px; }
+.wheel__item--sel {
+  color: var(--text); font-size: 34px; font-family: var(--font-mono);
+  background: var(--surface); border: 1px solid var(--border); margin: 6px 0;
+}
+.wheel__item--sel small { font-size: 12px; color: var(--primary); }

@@ -1,0 +1,16 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.chip:hover { border-color: #3d3d5a; }
+.chip--active { background: var(--primary-soft); border-color: var(--primary); }
+.chip__icon { font-size: 14px; }
+.chip__check { color: var(--primary); font-size: 12px; }

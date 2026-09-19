@@ -1,0 +1,9 @@
+.bnav {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px; z-index: 30;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  padding: 8px 0 10px; background: var(--surface); border-top: 1px solid var(--border);
+}
+.bnav__item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--text-muted); }
+.bnav__icon { font-size: 18px; }
+.bnav__item--active { color: var(--primary); }

@@ -1,0 +1,10 @@
+.mini {
+  position: fixed; bottom: 74px; left: 50%; transform: translateX(-50%); z-index: 25;
+  width: calc(100% - 24px); max-width: 406px;
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px; overflow: hidden;
+  background: var(--elevated); border: 1px solid var(--primary); border-radius: var(--radius-md);
+}
+.mini__title { flex: 1; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mini__btn { width: 30px; height: 30px; border-radius: 50%; font-size: 11px; color: var(--text-muted); }
+.mini__btn--play { background: var(--primary); color: #fff; }
+.mini__bar { position: absolute; left: 0; bottom: 0; height: 2px; background: var(--primary); }

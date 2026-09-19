@@ -1,0 +1,21 @@
+.onb { min-height: 100vh; display: flex; flex-direction: column; padding: 20px 20px 24px; }
+.onb__top { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+.onb__back { color: var(--text-muted); font-size: 18px; width: 28px; }
+
+.onb__kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+.onb__title { font-size: 34px; line-height: 1.1; }
+.onb__title em, .accent { color: var(--primary); font-style: italic; }
+.onb__sub { color: var(--text-muted); font-size: 13px; margin-top: 10px; }
+
+.onb__body { flex: 1; margin-top: 22px; }
+.onb__footer { padding-top: 18px; position: sticky; bottom: 0; background: linear-gradient(transparent, var(--bg) 30%); }
+
+/* shared helpers */
+.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.form-error { color: #ff6b81; font-size: 12px; margin-top: 12px; }

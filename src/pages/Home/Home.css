@@ -1,0 +1,24 @@
+.home { padding: 20px 20px 0; }
+.home__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+.home__logo { font-family: var(--font-heading); font-size: 18px; }
+.home__logo span { color: var(--primary); font-style: italic; }
+.home__icon { width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 16px; }
+
+.home__kicker { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+.home__title { font-size: 30px; line-height: 1.12; }
+.home__title em { color: var(--primary); }
+.home__meta { color: var(--text-muted); font-size: 12px; margin: 8px 0 20px; }
+.home__state { color: var(--text-muted); font-size: 13px; }
+.home__retry { margin-top: 10px; padding: 8px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.home__section { font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin: 26px 0 12px; }
+.home__list { display: flex; flex-direction: column; gap: 12px; }
+
+.player { padding: 18px; border-radius: var(--radius-lg); background: linear-gradient(160deg, var(--player-grad), var(--surface)); border: 1px solid var(--border); }
+.player__tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); }
+.player__title { font-size: 22px; line-height: 1.2; margin: 8px 0; }
+.player__summary { color: var(--text-muted); font-size: 12.5px; line-height: 1.5; margin-bottom: 16px; }
+.player__controls { display: flex; justify-content: center; align-items: center; gap: 22px; margin-top: 16px; }
+.player__controls button { font-size: 18px; color: var(--text); }
+.player__controls button:disabled { opacity: 0.3; cursor: not-allowed; }
+.player__controls .player__play { width: 56px; height: 56px; border-radius: 50%; background: var(--primary); font-size: 18px; }
+.player__count { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 12px; }
