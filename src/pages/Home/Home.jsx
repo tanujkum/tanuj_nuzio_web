@@ -3,9 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchBrief, toggleSave } from '../../features/stories/storiesThunks';
 import { playQueue, togglePlay, next, prev } from '../../features/player/playerSlice';
-import { greeting } from '../../utils/time';
+import { greeting, fmtDuration } from '../../utils/time';
+import { showToast } from '../../features/toast/toastSlice';
+import { topicTag } from '../../utils/tagMap';
+import useT from '../../hooks/useT';
 import Waveform from '../../components/player/Waveform/Waveform';
 import StoryCard from '../../components/story/StoryCard/StoryCard';
+import Icon from '../../components/ui/Icon/Icon';
 import './Home.css';
 
 export default function Home() {
@@ -13,6 +17,7 @@ export default function Home() {
   const navigate = useNavigate();
   const { data, status, error } = useSelector((s) => s.stories.brief);
   const player = useSelector((s) => s.player);
+  const { t, tn, lang } = useT();
 
   useEffect(() => { dispatch(fetchBrief()); }, [dispatch]);
 
@@ -26,66 +31,94 @@ export default function Home() {
   const playing = isBrief && player.isPlaying;
   const progress = isBrief ? player.progress : 0;
   const mins = Math.max(1, Math.round((data?.totalDurationSec || 0) / 60));
+  const activeTag = active?.topic ? topicTag(active.topic.slug) : { color: 'slate' };
 
   const startFrom = (i) =>
     dispatch(playQueue({ queue: stories, index: i, voiceName: data.voice?.name, autoAdvance: data.autoAdvance }));
   const onMain = () => (isBrief ? dispatch(togglePlay()) : startFrom(0));
   const onCardPlay = (i) => (isBrief && player.index === i ? dispatch(togglePlay()) : startFrom(i));
+  const onSave = (s) =>
+    dispatch(toggleSave({ id: s.id, save: !s.isSaved }))
+      .unwrap()
+      .catch(() => dispatch(showToast({ type: 'error', message: t('story.saveFail') })));
 
   return (
     <div className="home">
-      <header className="home__top">
-        <span className="home__logo">◉ Nuzio<span>.ai</span></span>
-        <button type="button" className="home__icon" onClick={() => navigate('/discover')} aria-label="Search">⌕</button>
-      </header>
+      <div className="topbar">
+        <span className="topbar__brand">
+          <span className="topbar__brand-mark"><Icon name="logo" size={12} /></span>
+          Nuzio
+        </span>
+        <div className="topbar__actions">
+          <button type="button" className="topbar__icon" onClick={() => navigate('/discover')} aria-label={t('home.search')}>
+            <Icon name="search" size={16} />
+          </button>
+          <button type="button" className="topbar__icon topbar__icon--dot" aria-label="notifications">
+            <Icon name="bell" size={16} />
+          </button>
+        </div>
+      </div>
 
       <p className="home__kicker">
-        {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'short' })}
+        {new Date().toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-IN', { weekday: 'long', day: 'numeric', month: 'short' })}
       </p>
 
-      {status === 'loading' && !data && <p className="home__state">Loading your brief…</p>}
+      {status === 'loading' && !data && <p className="home__state">{t('home.loading')}</p>}
       {status === 'failed' && (
         <div>
           <p className="form-error">{error}</p>
-          <button type="button" className="home__retry" onClick={() => dispatch(fetchBrief())}>Retry</button>
+          <button type="button" className="home__retry" onClick={() => dispatch(fetchBrief())}>{t('retry')}</button>
         </div>
       )}
 
       {data && (
         <>
           <h1 className="home__title">
-            {greeting()}, <em>{data.firstName}</em> — {stories.length} things.
+            {t(greeting())}, <em>{data.firstName}</em> — {t('home.things', { n: stories.length })}
           </h1>
           <p className="home__meta">
-            {data.voice?.name || 'Aria'} · {stories.length} stories · ~{mins} min
+            {t('home.meta', { voice: data.voice?.name || 'Aria', n: stories.length, m: mins })}
           </p>
 
           {active ? (
             <section className="player">
-              <span className="player__tag">{active.topic?.name}</span>
+              <div className="player__tags">
+                <span className={`badge badge--${activeTag.color}`}>{tn('topic', active.topic)}</span>
+              </div>
               <h2 className="player__title">{active.title}</h2>
               <p className="player__summary">{active.summary}</p>
 
               <Waveform progress={progress} playing={playing} />
+              <div className="player__time">
+                <span>{fmtDuration(Math.round((active.durationSec || 0) * progress))}</span>
+                <span>{fmtDuration(active.durationSec)}</span>
+              </div>
 
               <div className="player__controls">
-                <button type="button" onClick={() => dispatch(prev())} disabled={!isBrief}>⏮</button>
-                <button type="button" className="player__play" onClick={onMain}>{playing ? '❚❚' : '▶'}</button>
+                <button type="button" onClick={() => dispatch(prev())} disabled={!isBrief} aria-label={t('home.prev')}>
+                  <Icon name="skipBack" size={16} />
+                </button>
+                <button type="button" className="player__play" onClick={onMain} aria-label={t('home.play')}>
+                  <Icon name={playing ? 'pause' : 'play'} size={20} />
+                </button>
                 <button
                   type="button"
                   onClick={() => dispatch(next())}
                   disabled={!isBrief || player.index >= stories.length - 1}
-                >⏭</button>
+                  aria-label={t('home.next')}
+                >
+                  <Icon name="skipForward" size={16} />
+                </button>
               </div>
-              <p className="player__count">Story {activeIndex + 1} of {stories.length}</p>
+              <p className="player__count">{t('home.storyOf', { i: activeIndex + 1, n: stories.length })}</p>
             </section>
           ) : (
-            <p className="home__state">No stories yet for your topics.</p>
+            <p className="home__state">{t('home.empty')}</p>
           )}
 
           {stories.length > 0 && (
             <>
-              <h3 className="home__section">Today's stories</h3>
+              <h3 className="home__section">{t('home.today')}</h3>
               <div className="home__list">
                 {stories.map((s, i) => (
                   <StoryCard
@@ -94,7 +127,7 @@ export default function Home() {
                     active={isBrief && player.index === i}
                     playing={isBrief && player.index === i && player.isPlaying}
                     onPlay={() => onCardPlay(i)}
-                    onSave={() => dispatch(toggleSave({ id: s.id, save: !s.isSaved }))}
+                    onSave={() => onSave(s)}
                   />
                 ))}
               </div>

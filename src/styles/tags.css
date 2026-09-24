@@ -1,0 +1,45 @@
+/* Reusable colored "tag" tokens for topic/profession icons + story badges.
+   Usage: <span class="swatch swatch--indigo"><Icon .../></span>  or  <span class="badge badge--teal">AI & TECH</span> */
+
+.swatch {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 34px; height: 34px; border-radius: var(--radius-sm);
+}
+.swatch--sm { width: 30px; height: 30px; border-radius: 9px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 9px; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+}
+
+/* prettier-ignore */
+.swatch--indigo, .badge--indigo { background: var(--tag-indigo-soft); color: var(--tag-indigo); }
+.swatch--teal,   .badge--teal   { background: var(--tag-teal-soft);   color: var(--tag-teal); }
+.swatch--amber,  .badge--amber  { background: var(--tag-amber-soft);  color: var(--tag-amber); }
+.swatch--rose,   .badge--rose   { background: var(--tag-rose-soft);   color: var(--tag-rose); }
+.swatch--sky,    .badge--sky    { background: var(--tag-sky-soft);    color: var(--tag-sky); }
+.swatch--emerald,.badge--emerald{ background: var(--tag-emerald-soft);color: var(--tag-emerald); }
+.swatch--violet, .badge--violet { background: var(--tag-violet-soft); color: var(--tag-violet); }
+.swatch--orange, .badge--orange { background: var(--tag-orange-soft); color: var(--tag-orange); }
+.swatch--pink,   .badge--pink   { background: var(--tag-pink-soft);   color: var(--tag-pink); }
+.swatch--lime,   .badge--lime   { background: var(--tag-lime-soft);   color: var(--tag-lime); }
+.swatch--slate,  .badge--slate  { background: var(--tag-slate-soft);  color: var(--tag-slate); }
+.swatch--blue,   .badge--blue   { background: var(--tag-blue-soft);   color: var(--tag-blue); }
+
+/* Small top bar reused on Home / Discover / Settings / Billing */
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.topbar__brand { display: flex; align-items: center; gap: 7px; font-family: var(--font-heading); font-size: 15px; }
+.topbar__brand-mark {
+  width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center;
+  background: var(--gradient-accent); color: #fff; box-shadow: var(--glow-primary);
+}
+.topbar__actions { display: flex; gap: 8px; }
+.topbar__icon {
+  width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); position: relative;
+}
+.topbar__icon--dot::after {
+  content: ''; position: absolute; top: 6px; right: 7px; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 2px var(--surface);
+}

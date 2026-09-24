@@ -6,6 +6,8 @@
   --primary: #7c5cff;
   --primary-soft: rgba(124, 92, 255, 0.15);
   --accent-green: #2fd6a1;
+  --accent-green-strong: #22c98f;
+  --accent-green-soft: rgba(47, 214, 161, 0.15);
   --text: #f4f4f8;
   --text-muted: #8b8ba3;
   --elevated: #1a1a2c;
@@ -18,6 +20,29 @@
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
+
+  /* Brand gradients: purple = default/brand actions, purple->teal = "done/positive" CTAs */
+  --gradient-primary: linear-gradient(135deg, #8b6bff, var(--primary));
+  --gradient-accent: linear-gradient(135deg, var(--primary), var(--accent-green));
+  --gradient-mint: linear-gradient(135deg, var(--accent-green), #22b8ce);
+  --gradient-progress: linear-gradient(90deg, var(--primary), var(--accent-green));
+
+  --glow-primary: 0 0 24px rgba(124, 92, 255, 0.45);
+  --glow-accent: 0 0 24px rgba(47, 214, 161, 0.4);
+
+  /* Topic / profession tag colors (used for chip icons + story badges) */
+  --tag-indigo: #7c8bff; --tag-indigo-soft: rgba(124, 139, 255, 0.16);
+  --tag-teal: #2bd4c4; --tag-teal-soft: rgba(43, 212, 196, 0.16);
+  --tag-amber: #f5a623; --tag-amber-soft: rgba(245, 166, 35, 0.16);
+  --tag-rose: #ff6b93; --tag-rose-soft: rgba(255, 107, 147, 0.16);
+  --tag-sky: #4fc3f7; --tag-sky-soft: rgba(79, 195, 247, 0.16);
+  --tag-emerald: #2fd6a1; --tag-emerald-soft: rgba(47, 214, 161, 0.16);
+  --tag-violet: #b18bff; --tag-violet-soft: rgba(177, 139, 255, 0.16);
+  --tag-orange: #ff9457; --tag-orange-soft: rgba(255, 148, 87, 0.16);
+  --tag-pink: #ff7ad1; --tag-pink-soft: rgba(255, 122, 209, 0.16);
+  --tag-lime: #b6e35a; --tag-lime-soft: rgba(182, 227, 90, 0.16);
+  --tag-slate: #9aa0b4; --tag-slate-soft: rgba(154, 160, 180, 0.16);
+  --tag-blue: #6ea8ff; --tag-blue-soft: rgba(110, 168, 255, 0.16);
 }
 
 [data-theme='light'] {
@@ -28,8 +53,10 @@
   --primary: #6a49f0;
   --primary-soft: rgba(106, 73, 240, 0.1);
   --accent-green: #12a37a;
+  --accent-green-strong: #0f9a7f;
+  --accent-green-soft: rgba(18, 163, 122, 0.12);
   --text: #14141f;
   --text-muted: #6b6b82;
   --elevated: #ffffff;
   --player-grad: #e6e0ff;
-}
+}

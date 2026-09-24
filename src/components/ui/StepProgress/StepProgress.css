@@ -1,3 +1,3 @@
 .steps { display: flex; gap: 5px; flex: 1; }
 .steps__bar { flex: 1; height: 3px; border-radius: 3px; background: var(--surface-2); }
-.steps__bar--done { background: var(--primary); }
+.steps__bar--done { background: var(--gradient-progress); }

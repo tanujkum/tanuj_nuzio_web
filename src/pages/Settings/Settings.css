@@ -21,10 +21,11 @@
 
 .set__row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 13px 14px; }
 .set__row + .set__row { border-top: 1px solid var(--border); }
+.set__row-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .set__row strong { display: block; font-size: 13px; font-weight: 500; }
 .set__row small { color: var(--text-muted); font-size: 11px; }
 .set__row--btn { width: 100%; text-align: left; }
-.set__arrow { color: var(--text-muted); font-size: 22px; }
+.set__arrow { color: var(--text-muted); flex-shrink: 0; }
 
 .set__seg { display: flex; gap: 4px; padding: 3px; background: var(--surface-2); border-radius: var(--radius-sm); }
 .set__segbtn { padding: 6px 12px; font-size: 12px; color: var(--text-muted); border-radius: 6px; }
@@ -40,4 +41,4 @@
 .field input:focus, .field select:focus { border-color: var(--primary); }
 [data-theme='light'] .field input, [data-theme='light'] .field select { color-scheme: light; }
 
-.set__logout { margin: 26px 0 8px; }
+.set__logout { margin: 26px 0 8px; }

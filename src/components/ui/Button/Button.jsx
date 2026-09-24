@@ -1,8 +1,10 @@
+import useT from '../../../hooks/useT';
 import './Button.css';
 
 export default function Button({
   variant = 'primary', loading = false, disabled, className = '', children, ...rest
 }) {
+  const { t } = useT();
   return (
     <button
       type="button"
@@ -10,7 +12,7 @@ export default function Button({
       disabled={disabled || loading}
       {...rest}
     >
-      {loading ? 'Please wait…' : children}
+      {loading ? t('wait') : children}
     </button>
   );
-}
+}

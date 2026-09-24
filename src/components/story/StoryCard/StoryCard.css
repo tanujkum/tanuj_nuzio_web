@@ -4,11 +4,13 @@
 }
 .story--active { border-color: var(--primary); background: var(--primary-soft); }
 .story__meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.story__tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); }
 .story__src { font-size: 10px; color: var(--text-muted); }
-.story__title { font-size: 18px; line-height: 1.25; margin: 8px 0 6px; }
+.story__title { font-family: var(--font-heading); font-style: italic; font-size: 18px; line-height: 1.3; margin: 10px 0 6px; }
 .story__summary { font-size: 12px; line-height: 1.5; color: var(--text-muted); }
 .story__actions { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
 .story__save { font-size: 12px; color: var(--text-muted); }
 .story__save--on { color: var(--accent-green); }
-.story__play { width: 34px; height: 34px; border-radius: 50%; background: var(--primary); color: #fff; font-size: 11px; }
+.story__play {
+  width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--gradient-mint); color: #04231a; box-shadow: var(--glow-accent);
+}

@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { devLogin, googleLogin } from '../../../features/auth/authThunks';
 import { loginSchema } from '../../../validation/auth.schema';
 import Button from '../../../components/ui/Button/Button';
+import useT from '../../../hooks/useT';
+import Icon from '../../../components/ui/Icon/Icon';
 import './Login.css';
 
 const GOOGLE_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -25,6 +27,7 @@ export default function Login() {
   const navigate = useNavigate();
   const { token, user } = useSelector((s) => s.auth);
   const [serverError, setServerError] = useState('');
+  const { t, lang } = useT();
 
   const wrapRef = useRef(null);
   const [gWidth, setGWidth] = useState(340);
@@ -46,7 +49,7 @@ export default function Login() {
     try {
       await dispatch(googleLogin({ idToken: res.credential })).unwrap();
     } catch (msg) {
-      setServerError(typeof msg === 'string' ? msg : 'Google login failed');
+      setServerError(typeof msg === 'string' ? msg : t('login.googleFail'));
     }
   };
 
@@ -55,26 +58,24 @@ export default function Login() {
     try {
       await dispatch(devLogin(values)).unwrap();
     } catch (msg) {
-      setServerError(typeof msg === 'string' ? msg : 'Login failed');
+      setServerError(typeof msg === 'string' ? msg : t('login.fail'));
     }
   };
 
   return (
     <div className="login">
       <header className="login__logo">
-        <span className="login__mark" />
+        <span className="login__mark"><Icon name="logo" size={12} /></span>
         <span className="login__name">Nuzio</span>
         <span className="login__badge">AI</span>
       </header>
 
       <section className="login__hero">
         <h1 className="login__title">
-          Good morning.
-          <em>News on go.</em>
+          {t('login.title1')}
+          <em>{t('login.title2')}</em>
         </h1>
-        <p className="login__sub">
-          Personalised audio news for Indian professionals — curated every morning.
-        </p>
+        <p className="login__sub">{t('login.sub')}</p>
       </section>
 
       <footer className="login__bottom">
@@ -82,18 +83,19 @@ export default function Login() {
         <div
           ref={wrapRef}
           className="gbtn"
-          onClick={!GOOGLE_ID ? () => setServerError('Google login off hai: .env mein VITE_GOOGLE_CLIENT_ID daalo') : undefined}
+          onClick={!GOOGLE_ID ? () => setServerError(t('login.googleOff')) : undefined}
         >
           <div className="gbtn__face">
             <GoogleIcon />
-            <span>Continue with Google</span>
+            <span>{t('login.google')}</span>
           </div>
 
           {GOOGLE_ID && (
             <div className="gbtn__overlay">
               <GoogleLogin
                 onSuccess={onGoogleSuccess}
-                onError={() => setServerError('Google sign-in failed. Please try again.')}
+                onError={() => setServerError(t('login.googleFail'))}
+                locale={lang}
                 theme="filled_black"
                 shape="rectangular"
                 width={String(gWidth)}
@@ -103,24 +105,22 @@ export default function Login() {
         </div>
 
         {/* ---- OR + Name/Email login ---- */}
-        <div className="login__or"><span>OR</span></div>
+        <div className="login__or"><span>{t('login.or')}</span></div>
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate className="login__form">
-          <input className="login__input" placeholder="Your name" {...register('name')} />
+          <input className="login__input" placeholder={t('login.name')} {...register('name')} />
           {errors.name && <p className="form-error">{errors.name.message}</p>}
 
-          <input className="login__input" placeholder="Email" type="email" {...register('email')} />
+          <input className="login__input" placeholder={t('login.email')} type="email" {...register('email')} />
           {errors.email && <p className="form-error">{errors.email.message}</p>}
 
           {serverError && <p className="form-error">{serverError}</p>}
 
-          <Button type="submit" loading={isSubmitting}>Continue →</Button>
+          <Button type="submit" loading={isSubmitting}>{t('continue')}</Button>
         </form>
 
-        <p className="login__terms">
-          By continuing you agree to our <span>Terms</span> · <span>Privacy Policy</span>
-        </p>
+        <p className="login__terms">{t('login.terms')}</p>
       </footer>
     </div>
   );
-}
+}

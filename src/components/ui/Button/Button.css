@@ -9,6 +9,7 @@
 .btn:active { transform: scale(0.98); }
 .btn:disabled { opacity: 0.55; cursor: not-allowed; }
 
-.btn--primary { background: linear-gradient(135deg, #8b6bff, var(--primary)); color: #fff; }
+.btn--primary { background: var(--gradient-primary); color: #fff; box-shadow: var(--glow-primary); }
+.btn--accent { background: var(--gradient-mint); color: #04231a; box-shadow: var(--glow-accent); }
 .btn--ghost { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
-.btn--text { background: none; color: var(--text-muted); }
+.btn--text { background: none; color: var(--text-muted); }

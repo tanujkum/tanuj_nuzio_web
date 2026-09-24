@@ -8,6 +8,9 @@ import { calcStories } from '../../../utils/constants';
 import { fmt12, period } from '../../../utils/time';
 import useMeta from '../../../hooks/useMeta';
 import Button from '../../../components/ui/Button/Button';
+import Icon from '../../../components/ui/Icon/Icon';
+import useT from '../../../hooks/useT';
+import { professionTag, topicTag } from '../../../utils/tagMap';
 import './Ready.css';
 
 export default function Ready() {
@@ -17,20 +20,30 @@ export default function Ready() {
   const onb = useSelector((s) => s.onboarding);
   const user = useSelector((s) => s.auth.user);
 
+  const { t, tn } = useT();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const profession = professions.find((p) => p.id === onb.professionId)?.name || '-';
-  const topicNames = topics.filter((t) => onb.topicIds.includes(t.id)).map((t) => t.name);
+  const professionObj = professions.find((p) => p.id === onb.professionId);
+  const profession = tn('profession', professionObj) || '-';
+  const chosenTopics = topics.filter((x) => onb.topicIds.includes(x.id));
+  const topicNames = chosenTopics.map((x) => tn('topic', x));
   const voice = voices.find((v) => v.id === onb.voiceId)?.name || '-';
   const firstName = user?.name?.split(' ')[0] || 'there';
+  const profTag = professionObj ? professionTag(professionObj.slug) : { icon: 'compass', color: 'slate' };
+  const topicIcon = chosenTopics[0] ? topicTag(chosenTopics[0].slug) : { icon: 'compass', color: 'slate' };
 
   const rows = [
-    ['PROFESSION', profession],
-    ['TOPICS', topicNames.length > 2 ? `${topicNames.slice(0, 2).join(', ')} +${topicNames.length - 2}` : topicNames.join(', ') || '-'],
-    ['VOICE', voice],
-    ['LENGTH', `${calcStories(onb.briefMinutes)} stories · ~${onb.briefMinutes} min`],
-    ['DELIVERY', `Daily at ${fmt12(onb.deliveryTime)} ${period(onb.deliveryTime)}`],
+    { k: t('ready.profession'), v: profession, icon: profTag.icon, color: profTag.color },
+    {
+      k: t('ready.topics'),
+      v: topicNames.length > 2 ? `${topicNames.slice(0, 2).join(', ')} +${topicNames.length - 2}` : topicNames.join(', ') || '-',
+      icon: topicIcon.icon,
+      color: topicIcon.color,
+    },
+    { k: t('ready.voice'), v: voice, icon: 'mic', color: 'violet' },
+    { k: t('ready.length'), v: t('ready.lengthVal', { stories: calcStories(onb.briefMinutes), n: onb.briefMinutes }), icon: 'barChart', color: 'teal' },
+    { k: t('ready.delivery'), v: t('ready.deliveryVal', { time: `${fmt12(onb.deliveryTime)} ${period(onb.deliveryTime)}` }), icon: 'bell', color: 'amber' },
   ];
 
   const onStart = async () => {
@@ -38,7 +51,7 @@ export default function Ready() {
     try {
       await fullOnboardingSchema.validate(onb, { abortEarly: true });
     } catch (e) {
-      return setError(`${e.message}. Please go back and complete the previous steps.`);
+      return setError(t('ready.incomplete', { msg: e.message }));
     }
 
     setLoading(true);
@@ -47,7 +60,7 @@ export default function Ready() {
       navigate('/home', { replace: true });
       dispatch(resetOnboarding());
     } catch (msg) {
-      setError(typeof msg === 'string' ? msg : 'Could not save. Try again.');
+      setError(typeof msg === 'string' ? msg : t('ready.saveFail'));
       setLoading(false);
     }
   };
@@ -55,18 +68,24 @@ export default function Ready() {
   return (
     <div className="ready">
       <div className="ready__top">
-        <div className="ready__check">✓</div>
-        <p className="onb__kicker">ALL SET</p>
-        <h1 className="ready__title">You're ready, <em>{firstName}.</em></h1>
-        <p className="ready__sub">Your first brief will be waiting for you. We'll ping you when it's ready.</p>
+        <div className="ready__check"><Icon name="check" size={28} strokeWidth={2.4} /></div>
+        <p className="onb__kicker">{t('ready.kicker')}</p>
+        <h1 className="ready__title">
+          {t('ready.title', { name: '' }).split('*')[0]}
+          <em className="ready__name">{firstName}.</em>
+        </h1>
+        <p className="ready__sub">{t('ready.sub')}</p>
       </div>
 
       <div className="ready__list">
-        {rows.map(([k, v]) => (
-          <div key={k} className="ready__row">
-            <span>{k}</span>
-            <strong>{v}</strong>
-            <em>✓</em>
+        {rows.map((row) => (
+          <div key={row.k} className="ready__row">
+            <span className={`swatch swatch--${row.color}`}><Icon name={row.icon} size={16} /></span>
+            <div className="ready__row-text">
+              <span>{row.k}</span>
+              <strong>{row.v}</strong>
+            </div>
+            <em><Icon name="check" size={13} strokeWidth={2.6} /></em>
           </div>
         ))}
       </div>
@@ -74,8 +93,8 @@ export default function Ready() {
       {error && <p className="form-error">{error}</p>}
 
       <div className="ready__footer">
-        <Button loading={loading} onClick={onStart}>Start listening →</Button>
+        <Button variant="accent" loading={loading} onClick={onStart}>{t('ready.start')}</Button>
       </div>
     </div>
   );
-}
+}

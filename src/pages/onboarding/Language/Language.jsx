@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { setField } from '../../../features/onboarding/onboardingSlice';
 import Button from '../../../components/ui/Button/Button';
 import Toggle from '../../../components/ui/Toggle/Toggle';
+import useT from '../../../hooks/useT';
+import Rich from '../../../components/ui/Rich';
+import Icon from '../../../components/ui/Icon/Icon';
 import './Language.css';
 
 const LANGUAGES = [
@@ -14,14 +17,18 @@ export default function Language() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { language, locationEnabled } = useSelector((s) => s.onboarding);
+  const { t } = useT();
 
   return (
     <div className="lang">
-      <div className="lang__logo">◉ Nuzio<span>.ai</span></div>
+      <div className="lang__logo">
+        <span className="lang__logo-mark"><Icon name="logo" size={12} /></span>
+        Nuzio<span>.ai</span>
+      </div>
 
       <div className="lang__body">
-        <h1 className="lang__title">Choose your <em>language</em></h1>
-        <p className="lang__sub">Select the language for your daily brief</p>
+        <h1 className="lang__title"><Rich text={t('lang.title')} /></h1>
+        <p className="lang__sub">{t('lang.sub')}</p>
 
         <div className="lang__list">
           {LANGUAGES.map((l) => (
@@ -42,8 +49,8 @@ export default function Language() {
 
         <div className="lang__loc">
           <div>
-            <strong>Enable Location</strong>
-            <small>Get personal local news tailored to your city</small>
+            <strong>{t('lang.locTitle')}</strong>
+            <small>{t('lang.locSub')}</small>
           </div>
           <Toggle
             checked={locationEnabled}
@@ -52,7 +59,7 @@ export default function Language() {
         </div>
       </div>
 
-      <Button onClick={() => navigate('/login')}>Continue →</Button>
+      <Button onClick={() => navigate('/login')}>{t('continue')}</Button>
     </div>
   );
-}
+}

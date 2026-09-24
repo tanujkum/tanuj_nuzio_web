@@ -18,19 +18,14 @@
   gap: 8px;
 }
 .login__mark {
-  position: relative;
   width: 22px;
   height: 22px;
   border-radius: 7px;
-  background: linear-gradient(135deg, #a58bff, #6a49f0);
-  box-shadow: 0 0 20px rgba(124, 92, 255, 0.75);
-}
-.login__mark::after {
-  content: '';
-  position: absolute;
-  inset: 7px;
-  border-radius: 50%;
-  background: #fff;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--gradient-accent);
+  box-shadow: var(--glow-primary);
 }
 .login__name {
   font-family: var(--font-body);
@@ -178,4 +173,4 @@
   font-size: 14px;
   outline: none;
 }
-.login__input:focus { border-color: var(--primary); }
+.login__input:focus { border-color: var(--primary); }

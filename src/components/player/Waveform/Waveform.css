@@ -1,5 +1,9 @@
+.wave-wrap { display: flex; flex-direction: column; gap: 8px; }
 .wave { display: flex; align-items: flex-end; gap: 2px; height: 56px; }
 .wave__bar { flex: 1; border-radius: 2px; background: var(--surface-2); transform-origin: bottom; }
 .wave__bar--done { background: var(--primary); }
 .wave--live .wave__bar { animation: wave-pulse 0.9s ease-in-out infinite alternate; }
 @keyframes wave-pulse { from { transform: scaleY(0.75); } to { transform: scaleY(1); } }
+
+.wave__track { height: 3px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+.wave__track-fill { display: block; height: 100%; background: var(--gradient-progress); border-radius: 3px; transition: width 0.2s linear; }

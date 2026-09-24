@@ -1,5 +1,5 @@
 .bill { padding: 20px 20px 0; }
-.bill__back { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+.bill__back { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
 .bill__kicker { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--primary); margin-bottom: 8px; }
 .bill__title { font-size: 34px; line-height: 1.1; }
 .bill__title em { color: var(--primary); }
@@ -7,4 +7,4 @@
 .bill__list { display: flex; flex-direction: column; gap: 20px; }
 .bill__state { color: var(--text-muted); font-size: 13px; }
 .bill__retry { margin-top: 10px; padding: 8px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
-.bill__note { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 20px; }
+.bill__note { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 20px; }

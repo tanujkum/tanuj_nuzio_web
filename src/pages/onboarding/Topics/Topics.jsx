@@ -7,7 +7,10 @@ import { topicsSchema } from '../../../validation/onboarding.schema';
 import useMeta from '../../../hooks/useMeta';
 import OnboardingLayout from '../../../components/layout/OnboardingLayout/OnboardingLayout';
 import Chip from '../../../components/ui/Chip/Chip';
+import { topicTag } from '../../../utils/tagMap';
 import Button from '../../../components/ui/Button/Button';
+import Rich from '../../../components/ui/Rich';
+import useT from '../../../hooks/useT';
 
 const MAX = 7;
 
@@ -17,11 +20,12 @@ export default function Topics() {
   const { topics, status, error: metaError } = useMeta();
   const topicIds = useSelector((s) => s.onboarding.topicIds);
   const [error, setError] = useState('');
+  const { t, tn } = useT();
 
   const onToggle = (id) => {
     const selected = topicIds.includes(id);
     if (!selected && topicIds.length >= MAX) {
-      setError(`You can pick up to ${MAX} topics`);
+      setError(t('topics.max', { max: MAX }));
       return;
     }
     setError('');
@@ -40,23 +44,29 @@ export default function Topics() {
   return (
     <OnboardingLayout
       step={2}
-      title={<>What moves <em>your world?</em></>}
-      subtitle={`Pick up to ${MAX} topics · ${topicIds.length}/${MAX} selected`}
+      title={<Rich text={t('topics.title')} />}
+      subtitle={t('topics.sub', { max: MAX, n: topicIds.length })}
       onBack={() => navigate('/onboarding/profession')}
-      footer={<Button onClick={onContinue}>Continue →</Button>}
+      footer={<Button onClick={onContinue}>{t('continue')}</Button>}
     >
-      {status === 'loading' && <p className="onb__sub">Loading…</p>}
+      {status === 'loading' && <p className="onb__sub">{t('loading')}</p>}
       {status === 'failed' && (
         <div>
           <p className="form-error">{metaError}</p>
-          <Button variant="ghost" onClick={() => dispatch(retryMeta())}>Retry</Button>
+          <Button variant="ghost" onClick={() => dispatch(retryMeta())}>{t('retry')}</Button>
         </div>
       )}
 
       <div className="chip-grid">
-        {topics.map((t) => (
-          <Chip key={t.id} icon={t.icon} active={topicIds.includes(t.id)} onClick={() => onToggle(t.id)}>
-            {t.name}
+        {topics.map((topic) => (
+          <Chip
+            key={topic.id}
+            icon={topicTag(topic.slug).icon}
+            color={topicTag(topic.slug).color}
+            active={topicIds.includes(topic.id)}
+            onClick={() => onToggle(topic.id)}
+          >
+            {tn('topic', topic)}
           </Chip>
         ))}
       </div>

@@ -16,5 +16,5 @@
   background: #fff;
   transition: transform 0.2s;
 }
-.toggle--on { background: var(--primary); border-color: var(--primary); }
-.toggle--on .toggle__knob { transform: translateX(18px); }
+.toggle--on { background: var(--gradient-mint); border-color: var(--accent-green); box-shadow: 0 0 12px rgba(47, 214, 161, 0.35); }
+.toggle--on .toggle__knob { transform: translateX(18px); }

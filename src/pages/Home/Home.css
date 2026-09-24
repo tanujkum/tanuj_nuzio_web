@@ -1,8 +1,4 @@
 .home { padding: 20px 20px 0; }
-.home__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
-.home__logo { font-family: var(--font-heading); font-size: 18px; }
-.home__logo span { color: var(--primary); font-style: italic; }
-.home__icon { width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); font-size: 16px; }
 
 .home__kicker { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
 .home__title { font-size: 30px; line-height: 1.12; }
@@ -14,11 +10,18 @@
 .home__list { display: flex; flex-direction: column; gap: 12px; }
 
 .player { padding: 18px; border-radius: var(--radius-lg); background: linear-gradient(160deg, var(--player-grad), var(--surface)); border: 1px solid var(--border); }
-.player__tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); }
-.player__title { font-size: 22px; line-height: 1.2; margin: 8px 0; }
+.player__tags { margin-bottom: 8px; }
+.player__title { font-family: var(--font-heading); font-style: italic; font-size: 22px; line-height: 1.25; margin: 8px 0; }
 .player__summary { color: var(--text-muted); font-size: 12.5px; line-height: 1.5; margin-bottom: 16px; }
-.player__controls { display: flex; justify-content: center; align-items: center; gap: 22px; margin-top: 16px; }
-.player__controls button { font-size: 18px; color: var(--text); }
+.player__time { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 6px; }
+.player__controls { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 16px; }
+.player__controls button {
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+  color: var(--text); background: var(--surface-2); border: 1px solid var(--border);
+}
 .player__controls button:disabled { opacity: 0.3; cursor: not-allowed; }
-.player__controls .player__play { width: 56px; height: 56px; border-radius: 50%; background: var(--primary); font-size: 18px; }
-.player__count { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 12px; }
+.player__controls .player__play {
+  width: 60px; height: 60px; border-radius: 50%; background: var(--gradient-primary);
+  border: none; color: #fff; box-shadow: var(--glow-primary);
+}
+.player__count { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 12px; }

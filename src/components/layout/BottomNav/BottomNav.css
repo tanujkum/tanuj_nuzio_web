@@ -4,6 +4,6 @@
   display: grid; grid-template-columns: repeat(3, 1fr);
   padding: 8px 0 10px; background: var(--surface); border-top: 1px solid var(--border);
 }
-.bnav__item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--text-muted); }
-.bnav__icon { font-size: 18px; }
-.bnav__item--active { color: var(--primary); }
+.bnav__item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; color: var(--text-muted); }
+.bnav__icon { display: flex; }
+.bnav__item--active { color: var(--primary); }

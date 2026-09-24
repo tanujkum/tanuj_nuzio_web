@@ -20,7 +20,8 @@ export const fmtDuration = (sec = 0) =>
 
 export const greeting = () => {
   const h = new Date().getHours();
-  if (h < 12) return 'Good morning';
-  if (h < 17) return 'Good afternoon';
-  return 'Good evening';
-};
+  // translation key return karta hai: t(greeting())
+  if (h < 12) return 'greet.morning';
+  if (h < 17) return 'greet.afternoon';
+  return 'greet.evening';
+};

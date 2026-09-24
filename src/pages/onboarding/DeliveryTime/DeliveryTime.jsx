@@ -6,6 +6,8 @@ import { deliveryTimeSchema } from '../../../validation/onboarding.schema';
 import { toMin, toStr, fmt12, period } from '../../../utils/time';
 import OnboardingLayout from '../../../components/layout/OnboardingLayout/OnboardingLayout';
 import Button from '../../../components/ui/Button/Button';
+import Rich from '../../../components/ui/Rich';
+import useT from '../../../hooks/useT';
 import './DeliveryTime.css';
 
 const OFFSETS = [-60, -30, 0, 30, 60];
@@ -15,6 +17,7 @@ export default function DeliveryTime() {
   const navigate = useNavigate();
   const time = useSelector((s) => s.onboarding.deliveryTime);
   const [error, setError] = useState('');
+  const { t } = useT();
 
   const cur = toMin(time);
   const setTime = (t) => { setError(''); dispatch(setField({ deliveryTime: t })); };
@@ -32,10 +35,10 @@ export default function DeliveryTime() {
   return (
     <OnboardingLayout
       step={4}
-      title={<>When do you <em>want your brief?</em></>}
-      subtitle="Nuzio will have your brief ready and waiting each morning."
+      title={<Rich text={t('time.title')} />}
+      subtitle={t('time.sub')}
       onBack={() => navigate('/onboarding/voice')}
-      footer={<Button onClick={onContinue}>Continue →</Button>}
+      footer={<Button onClick={onContinue}>{t('continue')}</Button>}
     >
       <div className="ampm">
         {['AM', 'PM'].map((p) => (
@@ -71,4 +74,4 @@ export default function DeliveryTime() {
       {error && <p className="form-error">{error}</p>}
     </OnboardingLayout>
   );
-}
+}

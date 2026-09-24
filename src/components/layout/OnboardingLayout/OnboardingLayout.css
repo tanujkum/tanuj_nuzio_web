@@ -17,5 +17,6 @@
 .onb__footer { padding-top: 18px; position: sticky; bottom: 0; background: linear-gradient(transparent, var(--bg) 30%); }
 
 /* shared helpers */
-.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-.form-error { color: #ff6b81; font-size: 12px; margin-top: 12px; }
+.chip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.chip-grid .chip { width: 100%; }
+.form-error { color: #ff6b81; font-size: 12px; margin-top: 12px; }

@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchPlans, fetchCurrentPlan, subscribePlan } from '../../features/billing/billingThunks';
 import { showToast } from '../../features/toast/toastSlice';
+import useT from '../../hooks/useT';
+import Rich from '../../components/ui/Rich';
+import Icon from '../../components/ui/Icon/Icon';
 import PlanCard from '../../components/billing/PlanCard/PlanCard';
 import './Billing.css';
 
@@ -10,6 +13,7 @@ export default function Billing() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { plans, current, status, error, subscribingId } = useSelector((s) => s.billing);
+  const { t } = useT();
 
   useEffect(() => {
     dispatch(fetchPlans());
@@ -18,27 +22,29 @@ export default function Billing() {
 
   const onSelect = async (plan) => {
     const price = plan.price ? ` for ₹${plan.price.toLocaleString('en-IN')}` : '';
-    if (!window.confirm(`Switch to ${plan.name}${price}?\n(Demo only, no real payment)`)) return;
+    if (!window.confirm(t('bill.confirm', { plan: plan.name, price }))) return;
     try {
       await dispatch(subscribePlan(plan.id)).unwrap();
-      dispatch(showToast({ type: 'success', message: `You're now on ${plan.name}` }));
+      dispatch(showToast({ type: 'success', message: t('bill.nowOn', { plan: plan.name }) }));
     } catch (msg) {
-      dispatch(showToast({ type: 'error', message: typeof msg === 'string' ? msg : 'Could not update plan' }));
+      dispatch(showToast({ type: 'error', message: typeof msg === 'string' ? msg : t('bill.fail') }));
     }
   };
 
   return (
     <div className="bill">
-      <button type="button" className="bill__back" onClick={() => navigate('/settings')}>← Settings</button>
-      <p className="bill__kicker">PLAN &amp; BILLING</p>
-      <h1 className="bill__title">Start <em>Free.</em></h1>
-      <p className="bill__sub">Upgrade when your mornings pay for themselves.</p>
+      <button type="button" className="bill__back" onClick={() => navigate('/settings')}>
+        <Icon name="chevronLeft" size={15} /> {t('bill.back')}
+      </button>
+      <p className="bill__kicker">{t('bill.kicker')}</p>
+      <h1 className="bill__title"><Rich text={t('bill.title')} /></h1>
+      <p className="bill__sub">{t('bill.sub')}</p>
 
-      {status === 'loading' && plans.length === 0 && <p className="bill__state">Loading plans…</p>}
+      {status === 'loading' && plans.length === 0 && <p className="bill__state">{t('bill.loading')}</p>}
       {status === 'failed' && (
         <div>
           <p className="form-error">{error}</p>
-          <button type="button" className="bill__retry" onClick={() => dispatch(fetchPlans())}>Retry</button>
+          <button type="button" className="bill__retry" onClick={() => dispatch(fetchPlans())}>{t('retry')}</button>
         </div>
       )}
 
@@ -54,7 +60,7 @@ export default function Billing() {
         ))}
       </div>
 
-      <p className="bill__note">Demo payment flow. Koi real paisa nahi kat-ta.</p>
+      <p className="bill__note">{t('bill.note')}</p>
     </div>
   );
-}
+}

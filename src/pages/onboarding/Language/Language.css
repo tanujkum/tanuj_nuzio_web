@@ -1,6 +1,13 @@
 .lang { min-height: 100vh; display: flex; flex-direction: column; padding: 24px 20px; }
-.lang__logo { font-family: var(--font-heading); font-size: 20px; text-align: center; margin: 12px 0 34px; }
+.lang__logo {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-heading); font-size: 20px; text-align: center; margin: 12px 0 34px;
+}
 .lang__logo span { color: var(--primary); font-style: italic; }
+.lang__logo-mark {
+  width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center;
+  background: var(--gradient-accent); color: #fff; box-shadow: var(--glow-primary);
+}
 .lang__body { flex: 1; }
 .lang__title { font-size: 34px; line-height: 1.1; }
 .lang__title em { color: var(--primary); }
@@ -24,4 +31,4 @@
   display: flex; justify-content: space-between; align-items: center; gap: 12px;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
 }
-.lang__loc strong { display: block; font-size: 14px; }
+.lang__loc strong { display: block; font-size: 14px; }

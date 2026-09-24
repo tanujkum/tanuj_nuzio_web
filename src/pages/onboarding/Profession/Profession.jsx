@@ -7,7 +7,10 @@ import { professionSchema } from '../../../validation/onboarding.schema';
 import useMeta from '../../../hooks/useMeta';
 import OnboardingLayout from '../../../components/layout/OnboardingLayout/OnboardingLayout';
 import Chip from '../../../components/ui/Chip/Chip';
+import { professionTag } from '../../../utils/tagMap';
 import Button from '../../../components/ui/Button/Button';
+import Rich from '../../../components/ui/Rich';
+import useT from '../../../hooks/useT';
 
 export default function Profession() {
   const dispatch = useDispatch();
@@ -15,6 +18,7 @@ export default function Profession() {
   const { professions, status, error: metaError } = useMeta();
   const professionId = useSelector((s) => s.onboarding.professionId);
   const [error, setError] = useState('');
+  const { t, tn } = useT();
 
   const onContinue = async () => {
     try {
@@ -28,16 +32,16 @@ export default function Profession() {
   return (
     <OnboardingLayout
       step={1}
-      title={<>What's your <em>profession?</em></>}
-      subtitle="We'll tune your brief to what actually moves your day."
-      onBack={() => navigate('/login')}
-      footer={<Button onClick={onContinue}>Continue →</Button>}
+      title={<Rich text={t('prof.title')} />}
+      subtitle={t('prof.sub')}
+      onBack={() => navigate('/onboarding/language')}
+      footer={<Button onClick={onContinue}>{t('continue')}</Button>}
     >
-      {status === 'loading' && <p className="onb__sub">Loading…</p>}
+      {status === 'loading' && <p className="onb__sub">{t('loading')}</p>}
       {status === 'failed' && (
         <div>
           <p className="form-error">{metaError}</p>
-          <Button variant="ghost" onClick={() => dispatch(retryMeta())}>Retry</Button>
+          <Button variant="ghost" onClick={() => dispatch(retryMeta())}>{t('retry')}</Button>
         </div>
       )}
 
@@ -45,11 +49,12 @@ export default function Profession() {
         {professions.map((p) => (
           <Chip
             key={p.id}
-            icon={p.icon}
+            icon={professionTag(p.slug).icon}
+            color={professionTag(p.slug).color}
             active={professionId === p.id}
             onClick={() => { setError(''); dispatch(setField({ professionId: p.id })); }}
           >
-            {p.name}
+            {tn('profession', p)}
           </Chip>
         ))}
       </div>
